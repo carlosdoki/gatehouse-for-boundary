@@ -4,7 +4,7 @@ An independent desktop client for [HashiCorp Boundary](https://www.boundaryproje
 
 > Gatehouse for Boundary is an independent project. It is not affiliated with, endorsed by or sponsored by HashiCorp or IBM. "HashiCorp" and "Boundary" are trademarks of their respective owners.
 
-**[Download the latest release](../../releases/latest)** · [Privacy policy](docs/privacy/index.html) · [Report a problem](../../issues)
+**[Download the latest release](../../releases/latest)** · [Privacy policy](https://carlosdoki.github.io/gatehouse-for-boundary/privacy/) · [Report a problem](../../issues)
 
 Português (Brasil): [veja abaixo](#português-brasil)
 
@@ -54,7 +54,7 @@ Um cliente desktop independente para o [HashiCorp Boundary](https://www.boundary
 
 > O Gatehouse for Boundary é um projeto independente. Não é afiliado, endossado nem patrocinado pela HashiCorp ou pela IBM. "HashiCorp" e "Boundary" são marcas de seus respectivos proprietários.
 
-**[Baixar a última versão](../../releases/latest)** · [Política de privacidade](docs/privacy/index.html) · [Reportar um problema](../../issues)
+**[Baixar a última versão](../../releases/latest)** · [Política de privacidade](https://carlosdoki.github.io/gatehouse-for-boundary/privacy/) · [Reportar um problema](../../issues)
 
 ## O que faz
 
