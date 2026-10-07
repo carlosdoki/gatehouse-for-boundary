@@ -11,7 +11,8 @@ Português (Brasil): [veja abaixo](#português-brasil)
 ## What it does
 
 - Sign in with the **password** or **OIDC** (single sign-on) methods of your Boundary cluster
-- Browse and search **targets**, with their **aliases**, filtered by type, scope and active sessions
+- Browse and search **targets**, with their **IDs** and **aliases**, filtered by type, scope and active sessions
+- For targets with **host sources**, see the IDs of **all hosts** behind them
 - Connect to **SSH, TCP and RDP** targets with one click, and disconnect when you are done
 - See and end **your own sessions**, with times in Brasília time (GMT-3), UTC or your system time zone
 - Watch the **Boundary Client Agent** from the top bar: status, time left on your token, pause and resume
@@ -59,7 +60,8 @@ Um cliente desktop independente para o [HashiCorp Boundary](https://www.boundary
 ## O que faz
 
 - Entra com os métodos de **senha** ou **OIDC** (login único) do seu cluster Boundary
-- Navega e busca **alvos**, com seus **aliases**, filtrando por tipo, escopo e sessões ativas
+- Navega e busca **alvos**, com seus **IDs** e **aliases**, filtrando por tipo, escopo e sessões ativas
+- Para alvos com **host sources**, mostra os IDs de **todos os hosts** vinculados
 - Conecta em alvos **SSH, TCP e RDP** com um clique e desconecta quando terminar
 - Mostra e encerra **as suas sessões**, com horários em Brasília (GMT-3), UTC ou no fuso do sistema
 - Acompanha o **Boundary Client Agent** na barra superior: status, tempo restante do token, pausar e retomar
