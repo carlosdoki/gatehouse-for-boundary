@@ -6,9 +6,18 @@ An independent desktop client for [HashiCorp Boundary](https://www.boundaryproje
 
 **[Download the latest release](../../releases/latest)** · [Privacy policy](https://carlosdoki.github.io/gatehouse-for-boundary/privacy/) · [Report a problem](../../issues)
 
-_Last updated: October 10, 2026 (version 1.0.3)_
+_Last updated: October 15, 2026 (version 1.0.4)_
 
 Português (Brasil): [veja abaixo](#português-brasil)
+
+## What's new in 1.0.4
+
+- **Font size.** **Settings → Application → Font size** scales the whole app from 80% to 150%, in 10% steps. **Ctrl/Cmd +**, **Ctrl/Cmd −** and **Ctrl/Cmd 0** (reset to 100%) work anywhere in the app.
+- **Copy command for a host.** In a target's host list, right-click a host ID → **Copy command** to get `boundary connect … -target-id <id> -host-id <host> -addr <cluster>`.
+- **Warp for SSH (macOS).** Warp is now a built-in SSH option in [Preferred clients](#preferred-clients).
+- **Aliases without the `list` grant.** Aliases now come from the aliases your user can resolve (as the Client Agent does), so users without permission to list the global aliases still see them. The global listing remains as a fallback.
+- **Fix (macOS):** the app no longer makes macOS ask twice for Keychain access.
+- **Clearer connection errors.** TLS, DNS and connection-refused failures show their cause instead of a generic "network error".
 
 ## What's new in 1.0.3
 
@@ -39,13 +48,13 @@ This version brings Gatehouse for Boundary to Linux, with **.deb** (Debian/Ubunt
 - For targets with **host sources**, see the IDs of **all hosts** behind them
 - Connect to **SSH, TCP and RDP** targets with one click, and disconnect when you are done. Each time, choose to open your preferred client or only start the session and see the local port
 - Pick the program that opens each protocol (RDP, SSH, and TCP in a browser), or set your own command. See [Preferred clients](#preferred-clients)
-- Right-click a target ID → **Copy command** to get the matching `boundary connect` command for the terminal
+- Right-click a target or host ID → **Copy command** to get the matching `boundary connect` command for the terminal
 - See and end **your own sessions**, with times in Brasília time (GMT-3), UTC or your system time zone
 - Watch the **Boundary Client Agent** from the top bar: status, time left on your token, pause and resume
 - Get a banner when your **token expires** and sign in again in one click
 - **Windows:** detects when alias names are not reaching the Client Agent and fixes the DNS rule with one button
 - **Linux:** reach targets by alias name; the app resolves the names and opens the session on first connection
-- English and Brazilian Portuguese, light and dark themes
+- English and Brazilian Portuguese, light and dark themes, adjustable font size
 
 ## Prerequisites
 
@@ -137,7 +146,7 @@ Your sign-in is also shared with the Boundary CLI and Client Agent on your compu
 | Protocol      | macOS                                                          | Windows                                                | Linux                                                         |
 | ------------- | -------------------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------- |
 | Windows RDP   | System default, Windows App, Microsoft Remote Desktop          | Remote Desktop Connection (`mstsc`)                    | System default (`xdg-open`), Remmina, FreeRDP, FreeRDP 3      |
-| SSH           | System default (`ssh://`), Terminal, iTerm                     | Console window, Windows Terminal, PowerShell, PuTTY    | `x-terminal-emulator`, GNOME Terminal, Konsole, xterm         |
+| SSH           | System default (`ssh://`), Terminal, iTerm, Warp               | Console window, Windows Terminal, PowerShell, PuTTY    | `x-terminal-emulator`, GNOME Terminal, Konsole, xterm         |
 | TCP (browser) | System default, Safari, Google Chrome, Firefox, Microsoft Edge | System default, Google Chrome, Microsoft Edge, Firefox | System default (`xdg-open`), Firefox, Google Chrome, Chromium |
 
 Built-in SSH options run `ssh -p <port> -o NoHostAuthenticationForLocalhost=yes 127.0.0.1` with your local user name. Credentials that Boundary injects are not used, unlike `boundary connect ssh`. TCP opens `http://127.0.0.1:<port>`.
@@ -177,7 +186,16 @@ Um cliente desktop independente para o [HashiCorp Boundary](https://www.boundary
 
 **[Baixar a última versão](../../releases/latest)** · [Política de privacidade](https://carlosdoki.github.io/gatehouse-for-boundary/privacy/) · [Reportar um problema](../../issues)
 
-_Última atualização: 10 de outubro de 2026 (versão 1.0.3)_
+_Última atualização: 15 de outubro de 2026 (versão 1.0.4)_
+
+## Novidades da 1.0.4
+
+- **Tamanho da fonte.** **Settings → Application → Font size** ajusta o app inteiro de 80% a 150%, de 10% em 10%. Os atalhos **Ctrl/Cmd +**, **Ctrl/Cmd −** e **Ctrl/Cmd 0** (volta para 100%) funcionam em qualquer tela.
+- **Copiar comando para um host.** Na lista de hosts de um alvo, clique com o botão direito no ID do host → **Copiar comando** para pegar `boundary connect … -target-id <id> -host-id <host> -addr <cluster>`.
+- **Warp no SSH (macOS).** O Warp agora é uma opção pronta de SSH em [Clientes preferidos](#clientes-preferidos).
+- **Aliases sem a permissão de `list`.** Os aliases agora vêm dos aliases que o seu usuário consegue resolver (como faz o Client Agent), então quem não tem permissão para listar os aliases globais também os vê. A listagem global continua como alternativa.
+- **Correção (macOS):** o macOS não pede mais duas vezes o acesso ao Keychain.
+- **Erros de conexão mais claros.** Falhas de TLS, DNS e conexão recusada mostram a causa em vez de um "erro de rede" genérico.
 
 ## Novidades da 1.0.3
 
@@ -208,13 +226,13 @@ Esta versão traz o Gatehouse for Boundary para Linux, com pacotes **.deb** (Deb
 - Para alvos com **host sources**, mostra os IDs de **todos os hosts** vinculados
 - Conecta em alvos **SSH, TCP e RDP** com um clique e desconecta quando terminar. A cada vez, escolha abrir o seu cliente preferido ou só iniciar a sessão e ver a porta local
 - Escolhe o programa que abre cada protocolo (RDP, SSH e TCP no navegador), ou um comando seu. Veja [Clientes preferidos](#clientes-preferidos)
-- Clique com o botão direito no ID de um alvo → **Copiar comando** para pegar o comando `boundary connect` correspondente para o terminal
+- Clique com o botão direito no ID de um alvo ou host → **Copiar comando** para pegar o comando `boundary connect` correspondente para o terminal
 - Mostra e encerra **as suas sessões**, com horários em Brasília (GMT-3), UTC ou no fuso do sistema
 - Acompanha o **Boundary Client Agent** na barra superior: status, tempo restante do token, pausar e retomar
 - Avisa quando o **token expira** e permite entrar de novo com um clique
 - **Windows:** detecta quando os nomes dos aliases não chegam ao Client Agent e corrige a regra de DNS com um botão
 - **Linux:** acessa os alvos pelo nome do alias; o app resolve os nomes e abre a sessão na primeira conexão
-- Português do Brasil e inglês, temas claro e escuro
+- Português do Brasil e inglês, temas claro e escuro, tamanho da fonte ajustável
 
 ## Pré-requisitos
 
@@ -306,7 +324,7 @@ O seu login também é compartilhado com a CLI do Boundary e o Client Agent do c
 | Protocolo         | macOS                                                       | Windows                                                | Linux                                                       |
 | ----------------- | ----------------------------------------------------------- | ------------------------------------------------------ | ----------------------------------------------------------- |
 | Windows RDP       | Padrão do sistema, Windows App, Microsoft Remote Desktop    | Conexão de Área de Trabalho Remota (`mstsc`)           | Padrão do sistema (`xdg-open`), Remmina, FreeRDP, FreeRDP 3 |
-| SSH               | Padrão do sistema (`ssh://`), Terminal, iTerm               | Janela de console, Windows Terminal, PowerShell, PuTTY | `x-terminal-emulator`, GNOME Terminal, Konsole, xterm       |
+| SSH               | Padrão do sistema (`ssh://`), Terminal, iTerm, Warp         | Janela de console, Windows Terminal, PowerShell, PuTTY | `x-terminal-emulator`, GNOME Terminal, Konsole, xterm       |
 | TCP (navegador)   | Padrão do sistema, Safari, Google Chrome, Firefox, Microsoft Edge | Padrão do sistema, Google Chrome, Microsoft Edge, Firefox | Padrão do sistema (`xdg-open`), Firefox, Google Chrome, Chromium |
 
 As opções prontas de SSH rodam `ssh -p <porta> -o NoHostAuthenticationForLocalhost=yes 127.0.0.1` com o seu usuário local. As credenciais que o Boundary injeta não são usadas, ao contrário do `boundary connect ssh`. O TCP abre `http://127.0.0.1:<porta>`.
