@@ -6,9 +6,17 @@ An independent desktop client for [HashiCorp Boundary](https://www.boundaryproje
 
 **[Download the latest release](../../releases/latest)** · [Privacy policy](https://carlosdoki.github.io/gatehouse-for-boundary/privacy/) · [Report a problem](../../issues)
 
-_Last updated: October 15, 2026 (version 1.0.4)_
+_Last updated: October 19, 2026 (version 1.0.5)_
 
 Português (Brasil): [veja abaixo](#português-brasil)
+
+## What's new in 1.0.5
+
+- **Port in the target list.** Each target shows its default port next to the address (e.g. `db.internal:5432`), or `port 5432` when its hosts come from host sources. Search also matches the port.
+- **Database and Kubernetes clients for TCP targets.** **Connect** on a TCP target has a **Client** field: the preferred client as before, or Cassandra, Kubernetes, MongoDB, MySQL, PostgreSQL or Redis. The app picks one from the target's port when it can. See [Database and Kubernetes clients](#database-and-kubernetes-clients).
+- **Status menu.** Pause, resume or start the Client Agent without opening the window: right-click the Dock icon or click the shield icon in the menu bar on macOS, or use the tray icon on Windows. On Linux the tray shows alias status and setup. See [Status menu](#status-menu).
+- **Fix (Windows): broken Client Agent config.** Some installs leave a second `log_file` line with a macOS path at the end of `boundary-client-agent.hcl`. HCL does not accept a repeated setting, so the agent will not start. The config editor (**Settings → Client Agent**) now warns about repeated settings and macOS paths, and **Remove** deletes those lines before you save.
+- **Linux:** the `.deb` and `.rpm` packages now depend on AppIndicator, used by the tray icon.
 
 ## What's new in 1.0.4
 
@@ -44,13 +52,15 @@ This version brings Gatehouse for Boundary to Linux, with **.deb** (Debian/Ubunt
 ## What it does
 
 - Sign in with the **password** or **OIDC** (single sign-on) methods of your Boundary cluster
-- Browse and search **targets**, with their **IDs** and **aliases**, filtered by type, scope and active sessions
+- Browse and search **targets**, with their **IDs**, **address and port** and **aliases**, filtered by type, scope and active sessions
 - For targets with **host sources**, see the IDs of **all hosts** behind them
 - Connect to **SSH, TCP and RDP** targets with one click, and disconnect when you are done. Each time, choose to open your preferred client or only start the session and see the local port
+- Open TCP targets in a **database or Kubernetes client** (PostgreSQL, MySQL, MongoDB, Redis, Cassandra, Kubernetes) through `boundary connect <client>`. See [Database and Kubernetes clients](#database-and-kubernetes-clients)
 - Pick the program that opens each protocol (RDP, SSH, and TCP in a browser), or set your own command. See [Preferred clients](#preferred-clients)
 - Right-click a target or host ID → **Copy command** to get the matching `boundary connect` command for the terminal
 - See and end **your own sessions**, with times in Brasília time (GMT-3), UTC or your system time zone
 - Watch the **Boundary Client Agent** from the top bar: status, time left on your token, pause and resume
+- A **status menu** outside the window: the Dock and menu bar on macOS, the system tray on Windows and Linux. See [Status menu](#status-menu)
 - Get a banner when your **token expires** and sign in again in one click
 - **Windows:** detects when alias names are not reaching the Client Agent and fixes the DNS rule with one button
 - **Linux:** reach targets by alias name; the app resolves the names and opens the session on first connection
@@ -168,6 +178,39 @@ ssh -p {port} admin@{host}
 firefox https://{host}:{port}
 ```
 
+## Database and Kubernetes clients
+
+On a TCP target, **Connect → Client** can also run one of the Boundary CLI's client subcommands in a terminal window:
+
+| Client     | Command                     | Fields                               | Picked by default for port |
+| ---------- | --------------------------- | ------------------------------------ | -------------------------- |
+| Cassandra  | `boundary connect cassandra` | Username, Keyspace                   | 9042                       |
+| Kubernetes | `boundary connect kube`     | Extra arguments (e.g. `get pods -A`) | 6443                       |
+| MongoDB    | `boundary connect mongo`    | Username, Database                   | 27017                      |
+| MySQL      | `boundary connect mysql`    | Username, Database                   | 3306                       |
+| PostgreSQL | `boundary connect postgres` | Username, Database                   | 5432                       |
+| Redis      | `boundary connect redis`    | Username                             | 6379                       |
+
+All fields are optional. **Extra client arguments** are passed to the client after `--`.
+
+- The CLI starts the session and the client, so credentials that Boundary brokers for the target are used.
+- The client program (`cqlsh`, `kubectl`, `mongosh`, `mysql`, `psql`, `redis-cli`) must be installed and in the `PATH`.
+- The terminal follows your SSH choice in Preferred Clients: Terminal or iTerm on macOS; the console window or Windows Terminal on Windows; GNOME Terminal, Konsole, xterm or `x-terminal-emulator` on Linux.
+- The token goes to the CLI through a temporary script that only your user can read, never on the command line. On macOS and Linux the script deletes itself as soon as it runs. On Windows it deletes itself when the client exits.
+- These sessions are not shown with **Disconnect** on the target. Close the client or the terminal to end them, or cancel them on the Sessions page.
+
+## Status menu
+
+While you are signed in, the app shows a small menu outside its window:
+
+| Platform | Where                                                                | Contents                                                                                                        |
+| -------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| macOS    | Right-click the Dock icon, or click the shield icon in the menu bar | Client Agent status; Pause / Resume / Start agent; the menu bar icon also has an entry to bring the window back |
+| Windows  | System tray icon: left click opens the window, right click the menu | Client Agent status; Pause / Resume / Start agent; Open Gatehouse                                               |
+| Linux    | System tray icon                                                     | Alias status; Set up aliases (when needed); Open Gatehouse                                                      |
+
+On Linux the tray icon needs AppIndicator support. On plain GNOME, install the "AppIndicator and KStatusNotifierItem Support" extension. Without it the app works as usual, without the icon. Closing the window still quits the app, and the icon goes with it.
+
 ## Known limitations
 
 - **Linux:** while the app is closed, names inside alias domains do not resolve. Avoid creating aliases in the same domain as the controller (for example alias `*.company.com` with controller `boundary.company.com`); prefer internal domains such as `.internal` or `.local`.
@@ -186,7 +229,15 @@ Um cliente desktop independente para o [HashiCorp Boundary](https://www.boundary
 
 **[Baixar a última versão](../../releases/latest)** · [Política de privacidade](https://carlosdoki.github.io/gatehouse-for-boundary/privacy/) · [Reportar um problema](../../issues)
 
-_Última atualização: 15 de outubro de 2026 (versão 1.0.4)_
+_Última atualização: 19 de outubro de 2026 (versão 1.0.5)_
+
+## Novidades da 1.0.5
+
+- **Porta na lista de alvos.** Cada alvo mostra a porta padrão ao lado do endereço (ex.: `db.internal:5432`), ou `port 5432` quando os hosts vêm de host sources. A busca também encontra pela porta.
+- **Clientes de banco de dados e Kubernetes para alvos TCP.** O **Conectar** de um alvo TCP tem um campo **Client**: o cliente preferido, como antes, ou Cassandra, Kubernetes, MongoDB, MySQL, PostgreSQL ou Redis. O app escolhe um pela porta do alvo quando consegue. Veja [Clientes de banco de dados e Kubernetes](#clientes-de-banco-de-dados-e-kubernetes).
+- **Menu de status.** Pause, retome ou inicie o Client Agent sem abrir a janela: clique com o botão direito no ícone do Dock ou clique no ícone de escudo na barra de menus no macOS, ou use o ícone da bandeja no Windows. No Linux a bandeja mostra o status e a configuração dos aliases. Veja [Menu de status](#menu-de-status).
+- **Correção (Windows): config do Client Agent quebrada.** Algumas instalações deixam uma segunda linha `log_file` com um caminho do macOS no fim do `boundary-client-agent.hcl`. O HCL não aceita configuração repetida, então o agent não inicia. O editor de configuração (**Settings → Client Agent**) agora avisa sobre configurações repetidas e caminhos do macOS, e o **Remove** apaga essas linhas antes de salvar.
+- **Linux:** os pacotes `.deb` e `.rpm` agora dependem do AppIndicator, usado pelo ícone da bandeja.
 
 ## Novidades da 1.0.4
 
@@ -222,13 +273,15 @@ Esta versão traz o Gatehouse for Boundary para Linux, com pacotes **.deb** (Deb
 ## O que faz
 
 - Entra com os métodos de **senha** ou **OIDC** (login único) do seu cluster Boundary
-- Navega e busca **alvos**, com seus **IDs** e **aliases**, filtrando por tipo, escopo e sessões ativas
+- Navega e busca **alvos**, com seus **IDs**, **endereço e porta** e **aliases**, filtrando por tipo, escopo e sessões ativas
 - Para alvos com **host sources**, mostra os IDs de **todos os hosts** vinculados
 - Conecta em alvos **SSH, TCP e RDP** com um clique e desconecta quando terminar. A cada vez, escolha abrir o seu cliente preferido ou só iniciar a sessão e ver a porta local
+- Abre alvos TCP em um **cliente de banco de dados ou Kubernetes** (PostgreSQL, MySQL, MongoDB, Redis, Cassandra, Kubernetes) via `boundary connect <cliente>`. Veja [Clientes de banco de dados e Kubernetes](#clientes-de-banco-de-dados-e-kubernetes)
 - Escolhe o programa que abre cada protocolo (RDP, SSH e TCP no navegador), ou um comando seu. Veja [Clientes preferidos](#clientes-preferidos)
 - Clique com o botão direito no ID de um alvo ou host → **Copiar comando** para pegar o comando `boundary connect` correspondente para o terminal
 - Mostra e encerra **as suas sessões**, com horários em Brasília (GMT-3), UTC ou no fuso do sistema
 - Acompanha o **Boundary Client Agent** na barra superior: status, tempo restante do token, pausar e retomar
+- Um **menu de status** fora da janela: no Dock e na barra de menus no macOS, na bandeja do sistema no Windows e no Linux. Veja [Menu de status](#menu-de-status)
 - Avisa quando o **token expira** e permite entrar de novo com um clique
 - **Windows:** detecta quando os nomes dos aliases não chegam ao Client Agent e corrige a regra de DNS com um botão
 - **Linux:** acessa os alvos pelo nome do alias; o app resolve os nomes e abre a sessão na primeira conexão
@@ -345,6 +398,39 @@ open -a "Royal TSX" {file}
 ssh -p {port} admin@{host}
 firefox https://{host}:{port}
 ```
+
+## Clientes de banco de dados e Kubernetes
+
+Em um alvo TCP, **Conectar → Client** também pode rodar um dos subcomandos de cliente da CLI do Boundary numa janela de terminal:
+
+| Cliente    | Comando                      | Campos                                  | Escolhido por padrão na porta |
+| ---------- | ---------------------------- | --------------------------------------- | ----------------------------- |
+| Cassandra  | `boundary connect cassandra` | Usuário, Keyspace                       | 9042                          |
+| Kubernetes | `boundary connect kube`      | Argumentos extras (ex.: `get pods -A`)  | 6443                          |
+| MongoDB    | `boundary connect mongo`     | Usuário, Banco de dados                 | 27017                         |
+| MySQL      | `boundary connect mysql`     | Usuário, Banco de dados                 | 3306                          |
+| PostgreSQL | `boundary connect postgres`  | Usuário, Banco de dados                 | 5432                          |
+| Redis      | `boundary connect redis`     | Usuário                                 | 6379                          |
+
+Todos os campos são opcionais. Os **argumentos extras do cliente** são passados ao cliente depois de `--`.
+
+- A CLI inicia a sessão e o cliente, então as credenciais que o Boundary fornece para o alvo são usadas.
+- O programa cliente (`cqlsh`, `kubectl`, `mongosh`, `mysql`, `psql`, `redis-cli`) precisa estar instalado e no `PATH`.
+- O terminal segue a sua escolha de SSH em Clientes preferidos: Terminal ou iTerm no macOS; janela de console ou Windows Terminal no Windows; GNOME Terminal, Konsole, xterm ou `x-terminal-emulator` no Linux.
+- O token vai para a CLI por um script temporário que só o seu usuário consegue ler, nunca pela linha de comando. No macOS e no Linux o script se apaga assim que roda. No Windows ele se apaga quando o cliente fecha.
+- Essas sessões não aparecem com **Desconectar** no alvo. Feche o cliente ou o terminal para encerrá-las, ou cancele na página de Sessões.
+
+## Menu de status
+
+Enquanto você está logado, o app mostra um pequeno menu fora da janela:
+
+| Plataforma | Onde                                                                               | Conteúdo                                                                                                   |
+| ---------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| macOS      | Botão direito no ícone do Dock, ou clique no ícone de escudo na barra de menus     | Status do Client Agent; Pausar / Retomar / Iniciar o agent; o ícone da barra de menus também reabre a janela |
+| Windows    | Ícone na bandeja do sistema: clique esquerdo abre a janela, clique direito o menu | Status do Client Agent; Pausar / Retomar / Iniciar o agent; Abrir o Gatehouse                              |
+| Linux      | Ícone na bandeja do sistema                                                        | Status dos aliases; Configurar aliases (quando necessário); Abrir o Gatehouse                              |
+
+No Linux o ícone da bandeja precisa de suporte a AppIndicator. No GNOME puro, instale a extensão "AppIndicator and KStatusNotifierItem Support". Sem ela o app funciona normalmente, só sem o ícone. Fechar a janela continua encerrando o app, e o ícone some junto.
 
 ## Limitações conhecidas
 
